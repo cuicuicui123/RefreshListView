@@ -30,6 +30,18 @@ public class MainActivity extends AppCompatActivity {
                 }, 3000);
             }
         });
+        mRefreshListView.setOnLoadListener(new RefreshListView.OnLoadListener() {
+            @Override
+            public void onLoad() {
+                Handler handler = new Handler();//模拟耗时操作
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mRefreshListView.loadComplete();
+                    }
+                }, 3000);
+            }
+        });
     }
     //填充数据
     private List<Integer> getData(){

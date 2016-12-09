@@ -7,9 +7,5 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
-    <style name="progressBarStyle">
-        <item name="android:indeterminateDrawable">@drawable/progress</item>
-        <item name="android:indeterminate">false</item>
-    </style>
 
 </resources>
