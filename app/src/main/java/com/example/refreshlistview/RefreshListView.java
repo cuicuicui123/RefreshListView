@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Handler;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -103,6 +102,7 @@ public class RefreshListView extends ListView implements AbsListView.OnScrollLis
 
         mCanRefresh = true;
         mCanLoad = false;
+        mState = DONE;
         setOnScrollListener(this);
     }
 
@@ -140,10 +140,8 @@ public class RefreshListView extends ListView implements AbsListView.OnScrollLis
         switch (ev.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 mStartY = ev.getY();
-                mState = PULL_TO_REFRESH;
                 break;
             case MotionEvent.ACTION_MOVE:
-
                 float distance = (ev.getY() - mStartY) / mScale;
                 if (distance > 0 || mState != DONE) {
                     setSelection(0);//设置当前位置为0，防止列表跟着一起滚动
@@ -206,7 +204,6 @@ public class RefreshListView extends ListView implements AbsListView.OnScrollLis
         switch (ev.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 mStartY = ev.getY();
-                mState = PULL_TO_REFRESH;
                 break;
             case MotionEvent.ACTION_MOVE:
                 float distance = (mStartY - ev.getY()) / mScale;
@@ -266,7 +263,6 @@ public class RefreshListView extends ListView implements AbsListView.OnScrollLis
     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
         mCanRefresh = firstVisibleItem == 0 ? true : false;
         mCanLoad = (getLastVisiblePosition() == totalItemCount - 1 && visibleItemCount < totalItemCount) ? true : false;
-        Log.i("flag", mCanRefresh + "  " + mCanLoad);
     }
 
     public void refreshComplete(){
